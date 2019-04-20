@@ -3,9 +3,17 @@ module Activities
     "#{@api_endpoint}/activities"
   end
 
-  def create_activity_by_type(type, name: "Created with StravAPI", start_date_local: Time.now.to_s, elapsed_time: 0, description: '', distance: 0, trainer: 0, commute: 0, private: true)
+  def create_activity_by_type(type,
+                              name: 'Created with StravAPI',
+                              start_date_local: Time.now.to_s,
+                              elapsed_time: 0,
+                              description: '',
+                              distance: 0,
+                              trainer: 0,
+                              commute: 0,
+                              private: true)
     data = {
-      headers: {"Authorization" => @bearer},
+      headers: { 'Authorization' => @bearer },
       body: {
         client_id: @client_id,
         client_secret: @client_secret,
@@ -26,9 +34,9 @@ module Activities
       }
     }
     begin
-       @response = HTTParty.post(acitivies_api_endpoint, data)
-    rescue => e
-      puts "#{e}"
+      @response = HTTParty.post(acitivies_api_endpoint, data)
+    rescue StandardError => e
+      puts e.to_s
       puts 'Error when calling API.'
     end
   end
