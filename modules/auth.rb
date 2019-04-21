@@ -1,4 +1,13 @@
 module Auth
+  def get_auth_code
+    user_interaction = <<~HERE
+      Please Visit this in your Browser:
+
+      http://www.strava.com/oauth/authorize?client_id=#{@client_id}&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=auto&scope=profile:read,write,activity:read,write
+    HERE
+    puts user_interaction
+  end
+
   def login
     data = {
       headers: {},
