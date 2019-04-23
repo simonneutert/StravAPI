@@ -1,11 +1,16 @@
 module Auth
   def get_auth_code
+    redirect_uri = @redirect_uri
+    url_to_strava_api_login = "http://www.strava.com/oauth/authorize?client_id=#{@client_id}&response_type=code&redirect_uri=#{redirect_uri}&approval_prompt=auto&scope=profile:read,write,activity:read,write"
+
     user_interaction = <<~HERE
       Please Visit this in your Browser:
 
-      http://www.strava.com/oauth/authorize?client_id=#{@client_id}&response_type=code&redirect_uri=http://localhost/exchange_token&approval_prompt=auto&scope=profile:read,write,activity:read,write
+      #{url_to_strava_api_login}
     HERE
     puts user_interaction
+
+    SystemCalls::WebBrowser.open(url_to_strava_api_login)
   end
 
   def login
