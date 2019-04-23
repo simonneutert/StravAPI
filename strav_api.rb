@@ -2,11 +2,7 @@ require 'pry' if ENV['RACK_ENV'] == 'development'
 require 'httparty'
 require 'dotenv/load'
 
-require_relative './modules/api_debugger'
-require_relative './modules/auth'
-require_relative './modules/response'
-require_relative './modules/activities'
-require_relative './modules/athlete'
+Dir["./modules/*.rb"].each {|file| require file }
 
 class StravApi
   include ApiDebugger
