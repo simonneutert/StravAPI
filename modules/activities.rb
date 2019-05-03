@@ -12,6 +12,7 @@ module Activities
                               trainer: 0,
                               commute: 0,
                               private: true)
+                              
     data = {
       headers: { 'Authorization' => @bearer },
       body: {

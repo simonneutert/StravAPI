@@ -3,6 +3,10 @@ module Athlete
     "#{@api_endpoint}/athlete"
   end
 
+  def some_athlete_api_endpoint(athlete_id)
+    "#{@api_endpoint}/athletes/#{athlete_id}"
+  end
+
   def get_athlete
     data = {
       headers: {"Authorization" => @bearer}
@@ -15,6 +19,12 @@ module Athlete
     data = {
       headers: {"Authorization" => @bearer},
       body: {
+        client_id: @client_id,
+        client_secret: @client_secret,
+        code: @auth_code,
+        grant_type: 'authorization_code',
+        response_type: 'code',
+        approval_prompt: 'auto',
         page: page,
         per_page: per_page,
         before: before,
@@ -26,8 +36,11 @@ module Athlete
 
   def get_athlete_by(id:)
     data = {
-      headers: {"Authorization" => @bearer}
+      headers: {"Authorization" => @bearer},
+      body: {
+      }.merge(@main_body)
     }
-    @response = HTTParty.get("#{athlete_id_endpoint}/#{id}", data)
+    url = "#{some_athlete_api_endpoint(id)}/stats"
+    @response = HTTParty.get(url, data)
   end
 end
